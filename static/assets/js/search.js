@@ -2,27 +2,18 @@ $('form[name="search"]').submit(function (e) {
     e.preventDefault();
 
     const form = $(this);
-    const url = form.attr('action');
-    const submit = form.find('button[type="submit"]')
-
-    submit.attr('disabled', true)
-    loader(true)
+    searching(true, form)
 
     $.ajax({
         type: "POST",
-        url: url,
+        url: form.attr('action'),
         data: form.serializeArray(),
         success: function (response) {
-            console.log(response)
-
-            submit.attr('disabled', false)
-            loader(false)
+            searching(false, form)
             printProfile(response)
         },
         error: function (response) {
-            console.log(response)
-            loader(false)
-            submit.attr('disabled', false)
+            searching(false, form)
         }
     });
 });
@@ -48,16 +39,21 @@ $('body').on('click', 'a.print-profile', function (e) {
     });
 });
 
-function loader(status) {
+function searching(status, form) {
+    toastr.clear()
+
     $('div.status').attr('hidden', !status)
+    form.find('button[type="submit"]').attr('disabled', status)
+    form.find('input[name="phone"]').attr('readonly', status)
 
     if (status) {
         $('div.card-profile').attr('hidden', true)
     }
 }
 
-function printProfile(data) {
-    if ( $.isEmptyObject(data.info)) {
+function printProfile(values) {
+    const data = values.data
+    if ( $.isEmptyObject(data)) {
         toastr.info('სამწუხაროდ ინფორმაცია ამ ნომრის მფლობელის შესახებ ვერ მოიძებნა.')
         return
     }
