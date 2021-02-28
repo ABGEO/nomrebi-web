@@ -1,11 +1,5 @@
 {% extends "layout.html" %}
 
-{% block stylesheets %}
-    {{ super() }}
-
-    <link href="{{ url_for('static',  filename='assets/css/toastr.min.css') }}" rel="stylesheet"/>
-{% endblock %}
-
 {% block content %}
     <section class="section section-shaped section-lg profile-page">
         <div class="container">
@@ -92,7 +86,6 @@
 {% block javascripts %}
     {{ super() }}
 
-    <script src="{{ url_for('static',  filename='assets/js/plugins/toastr.min.js') }}"></script>
     <script src="{{ url_for('static',  filename='assets/js/plugins/html2canvas.min.js') }}" type="text/javascript"></script>
     <script src="{{ url_for('static',  filename='assets/js/search.js') }}" type="text/javascript"></script>
 {% endblock %}

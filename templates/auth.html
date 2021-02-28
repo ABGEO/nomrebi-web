@@ -14,7 +14,10 @@
                                     სერვისით სარგებლობისთვის აუცილებელია მოქმედი ტელეფონის ნომრის მითითება და
                                     ვერიფიცირება
                                 </small>
-                                <small class="step-code" hidden>მიუთითეთ მიღებული SMS კოდი</small>
+                                <small class="step-code" hidden>
+                                    SMS კოდი გამოგზავნილია მითითებულ ნომერზე. განმეორებით გაგზავნას შეძლებთ
+                                    <span style="font-weight: bold;" class="count-sec">60</span> წამში.
+                                </small>
                             </div>
                             <form name="auth" role="form" action="{{ url_for('auth') }}" method="post">
                                 <div class="form-group mb-3">

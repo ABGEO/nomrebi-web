@@ -6,12 +6,12 @@ API_BASE_URL = 'http://127.0.0.1:8080/api'
 
 
 def authenticate(phone_number):
-    response = requests.get(f'{API_BASE_URL}/authenticate/{phone_number}')
+    response = requests.post(f'{API_BASE_URL}/authenticate', json={'phone': phone_number})
     return json.loads(response.content)
 
 
 def authenticate_with_sms_code(phone_number, code):
-    response = requests.get(f'{API_BASE_URL}/authenticate/{phone_number}/sms/{code}')
+    response = requests.post(f'{API_BASE_URL}/authenticate/sms', json={'phone': phone_number, 'code': code})
     return json.loads(response.content)
 
 

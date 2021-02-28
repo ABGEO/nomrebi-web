@@ -21,7 +21,7 @@ $('form[name="auth"]').submit(function (e) {
         success: function (response) {
             if (response.authenticated) {
                 window.location = response.destination
-            } else if (response.sms_sent) {
+            } else if (response.time) {
                 $('small.step-phone').attr('hidden', true)
                 $('small.step-code').attr('hidden', false)
 
@@ -29,12 +29,31 @@ $('form[name="auth"]').submit(function (e) {
                 fieldCode.closest('.form-group').attr('hidden', false)
                 fieldCode.attr('required', true)
                 submit.text('შემოწმება')
+
+                let secondsLeft = 60;
+                if (parseInt(response.time) > 1) {
+                    secondsLeft = parseInt(response.time);
+                }
+
+                // Left time to resend the code
+                const resendTimer = function (sec) {
+                    $('.count-sec').text(--secondsLeft);
+                    if (secondsLeft === 1) {
+                        $('.step-code').html('არ მოგივიდათ SMS? <a href="#">ხელახლა გაგზავნა</a>.');
+                    } else {
+                        setTimeout(function () {
+                            resendTimer();
+                        }, 1000);
+                    }
+                };
+
+                resendTimer();
             }
 
             submit.attr('disabled', false)
         },
         error: function (response) {
-            console.log(response)
+            toastr.error(response.responseJSON.error, 'შეცდომა!')
             submit.attr('disabled', false)
         }
     });

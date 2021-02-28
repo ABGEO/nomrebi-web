@@ -46,23 +46,25 @@ def auth():
                 # If user is already authenticated on the API.
                 return __make_auth_response(
                     request.form['phone'],
-                    authenticate['data']['id'],
-                    authenticate['data']['tk'],
+                    authenticate['data'],
                     url_for('index')
                 )
 
+            if 'error' in authenticate:
+                return json.jsonify({'authenticated': False, 'error': authenticate['error']}), 400
+
             # If user is not authenticated and the SMS was sent.
-            if authenticate['sms_sent']:
-                return json.jsonify({'authenticated': False, 'sms_sent': True, 'destination': None})
-        else:
+            return json.jsonify({'authenticated': False, 'time': authenticate['data']['time']})
+        elif request.form['step'] == 'code':
             authenticate = api.authenticate_with_sms_code(request.form['phone'], request.form['code'])
-            if authenticate['valid']:
-                return __make_auth_response(
-                    request.form['phone'],
-                    authenticate['data']['id'],
-                    authenticate['data']['tk'],
-                    url_for('index')
-                )
+            if 'error' in authenticate:
+                return json.jsonify({'error': authenticate['error']}), 400
+
+            return __make_auth_response(
+                request.form['phone'],
+                authenticate['data'],
+                url_for('index')
+            )
 
     return render_template('auth.html')
 
@@ -79,16 +81,15 @@ def __get_auth_data():
     return None if (user_data is None) else json.loads(user_data)
 
 
-def __make_auth_response(phone, uid, token, destination=None):
+def __make_auth_response(phone, auth_data, destination=None):
     response = make_response(json.jsonify({
         'authenticated': True,
-        'sms_sent': False,
         'destination': destination,
     }))
     user_data = {
         'phone': phone,
-        'id': uid,
-        'token': token,
+        'id': auth_data['id'],
+        'token': auth_data['tk'],
     }
 
     response.set_cookie('user_data', json.dumps(user_data),

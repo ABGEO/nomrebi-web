@@ -58,21 +58,6 @@ function loader(status) {
 
 function printProfile(data) {
     if ( $.isEmptyObject(data.info)) {
-        toastr.options = {
-            "closeButton": true,
-            "newestOnTop": true,
-            "progressBar": true,
-            "positionClass": "toast-bottom-center",
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "10000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut",
-        };
-
         toastr.info('სამწუხაროდ ინფორმაცია ამ ნომრის მფლობელის შესახებ ვერ მოიძებნა.')
         return
     }
