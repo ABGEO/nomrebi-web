@@ -26,7 +26,7 @@
                                             <span class="input-group-text"><i class="ni ni-mobile-button"></i></span>
                                         </div>
                                         <input class="form-control" name="phone" placeholder="ტელეფონის ნომერი"
-                                               type="text" required>
+                                               type="tel" pattern="[0-9]{9}" required>
                                     </div>
                                 </div>
 
@@ -35,7 +35,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                                         </div>
-                                        <input class="form-control" name="code" placeholder="SMS კოდი" type="text">
+                                        <input class="form-control" name="code" placeholder="SMS კოდი" type="tel"
+                                               pattern="[0-9]{4}">
                                     </div>
                                 </div>
 
