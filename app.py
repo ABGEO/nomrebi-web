@@ -17,6 +17,11 @@ app = Flask(__name__)
 
 @app.context_processor
 def inject_global_variables():
+    """
+    Define the global template variables.
+    :return: The global variables.
+    """
+
     return {
         'user': __get_auth_data(),
         'date': datetime.datetime.now()
@@ -25,6 +30,11 @@ def inject_global_variables():
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    """
+    Search page.
+    :return: The response.
+    """
+
     if __get_auth_data() is None:
         return redirect(url_for('auth'))
 
@@ -36,6 +46,11 @@ def index():
 
 @app.route('/auth', methods=['GET', 'POST'])
 def auth():
+    """
+    Authentication page.
+    :return: The response.
+    """
+
     if __get_auth_data() is not None:
         return redirect(url_for('index'))
 
@@ -71,17 +86,35 @@ def auth():
 
 @app.route('/logout', methods=['GET'])
 def logout():
+    """
+    Logout page.
+    :return: The response.
+    """
+
     response = make_response(redirect(url_for('auth')))
     response.delete_cookie('user_data')
     return response
 
 
 def __get_auth_data():
+    """
+    Get the authentication data stored in cookies.
+    :return: Authentication data or None.
+    """
+
     user_data = request.cookies.get('user_data')
     return None if (user_data is None) else json.loads(user_data)
 
 
 def __make_auth_response(phone, auth_data, destination=None):
+    """
+    Create an authentication response and set cookies.
+    :param phone: User's phone number.
+    :param auth_data: The authentication credentials, such as User's phone, ID and the access token.
+    :param destination: The redirect destination.
+    :return: An authentication response.
+    """
+
     response = make_response(json.jsonify({
         'authenticated': True,
         'destination': destination,

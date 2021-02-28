@@ -1,3 +1,6 @@
+/**
+ * Send the search request and display the result.
+ */
 $('form[name="search"]').submit(function (e) {
     e.preventDefault();
 
@@ -10,7 +13,7 @@ $('form[name="search"]').submit(function (e) {
         data: form.serializeArray(),
         success: function (response) {
             searching(false, form)
-            printProfile(response)
+            displayProfile(response)
         },
         error: function (response) {
             searching(false, form)
@@ -18,6 +21,9 @@ $('form[name="search"]').submit(function (e) {
     });
 });
 
+/**
+ * Save profile to the image and download it.
+ */
 $('body').on('click', 'a.print-profile', function (e) {
     const elementToPrint = $('div.card-profile')
     const elementToPrintBackup = elementToPrint.html()
@@ -39,6 +45,12 @@ $('body').on('click', 'a.print-profile', function (e) {
     });
 });
 
+/**
+ * Helper function for search form.
+ * 
+ * @param status The search status.
+ * @param form The search form.
+ */
 function searching(status, form) {
     toastr.clear()
 
@@ -51,7 +63,12 @@ function searching(status, form) {
     }
 }
 
-function printProfile(values) {
+/**
+ * Display the profile data.
+ *
+ * @param values Profile data to display.
+ */
+function displayProfile(values) {
     const data = values.data
     if ( $.isEmptyObject(data)) {
         toastr.info('სამწუხაროდ ინფორმაცია ამ ნომრის მფლობელის შესახებ ვერ მოიძებნა.')

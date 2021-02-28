@@ -8,6 +8,11 @@ $('small.step-code').on('click', 'a.resend-sms', function (e) {
     sendSMS(true)
 });
 
+/**
+ * Send and verify the SMS code.
+ *
+ * @param resend Resend the SMS code or not.
+ */
 function sendSMS(resend = false) {
     const form = $('form[name="auth"]')
     const submit = form.find('button[type="submit"]')
