@@ -1,19 +1,32 @@
 $('form[name="auth"]').submit(function (e) {
     e.preventDefault();
+    sendSMS()
+});
 
-    const form = $(this);
-    const url = form.attr('action');
+$('small.step-code').on('click', 'a.resend-sms', function (e) {
+    e.preventDefault();
+    sendSMS(true)
+});
+
+function sendSMS(resend = false) {
+    const form = $('form[name="auth"]')
     const submit = form.find('button[type="submit"]')
     const fieldPhone = form.find('input[name="phone"]')
     const fieldCode = form.find('input[name="code"]')
-    const step = fieldCode.closest('.form-group').attr('hidden') ? 'phone' : 'code'
+    const step = fieldCode.closest('.form-group').attr('hidden') || resend ? 'phone' : 'code'
 
     submit.attr('disabled', true)
 
+    if (resend) {
+        $('.step-code').html('SMS კოდი გამოგზავნილია მითითებულ ნომერზე. ' +
+            'განმეორებით გაგზავნას შეძლებთ <span style="font-weight: bold;" class="count-sec">60</span> წამში.')
+    }
+
     $.ajax({
         type: "POST",
-        url: url,
+        url: form.attr('action'),
         data: {
+            resend: resend,
             step: step,
             phone: fieldPhone.val(),
             code: fieldCode.val(),
@@ -31,15 +44,15 @@ $('form[name="auth"]').submit(function (e) {
                 submit.text('შემოწმება')
 
                 let secondsLeft = 60;
-                if (parseInt(response.time) > 1) {
+                if (parseInt(response.time) > 0) {
                     secondsLeft = parseInt(response.time);
                 }
 
                 // Left time to resend the code
                 const resendTimer = function (sec) {
                     $('.count-sec').text(--secondsLeft);
-                    if (secondsLeft === 1) {
-                        $('.step-code').html('არ მოგივიდათ SMS? <a href="#">ხელახლა გაგზავნა</a>.');
+                    if (secondsLeft === 0) {
+                        $('.step-code').html('არ მოგივიდათ SMS? <a href="#" class="resend-sms">ხელახლა გაგზავნა</a>.');
                     } else {
                         setTimeout(function () {
                             resendTimer();
@@ -57,4 +70,4 @@ $('form[name="auth"]').submit(function (e) {
             submit.attr('disabled', false)
         }
     });
-});
+}

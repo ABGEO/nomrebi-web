@@ -41,7 +41,7 @@ def auth():
 
     if request.method == 'POST':
         if request.form['step'] == 'phone':
-            authenticate = api.authenticate(request.form['phone'])
+            authenticate = api.authenticate(request.form['phone'], request.form['resend'] == 'true')
             if authenticate['authenticated']:
                 # If user is already authenticated on the API.
                 return __make_auth_response(
