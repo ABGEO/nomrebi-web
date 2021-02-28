@@ -13,3 +13,6 @@ htmlcov/
 dist/
 build/
 *.egg-info/
+
+static/node_modules
+static/package-lock.json

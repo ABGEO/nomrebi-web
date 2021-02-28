@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ka">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/png" href="{{ url_for('static',  filename='assets/img/favicon.png') }}">
+    <title>{% block title %}მთავარი{% endblock %} | ნომრები</title>
+
+    {% block stylesheets %}
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+        <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+        <link href="{{ url_for('static',  filename='assets/css/nucleo-icons.css') }}" rel="stylesheet"/>
+        <link href="{{ url_for('static',  filename='assets/css/nucleo-svg.css') }}" rel="stylesheet"/>
+        <link href="{{ url_for('static',  filename='assets/css/font-awesome.css') }}" rel="stylesheet"/>
+        <link href="{{ url_for('static',  filename='assets/css/nucleo-svg.css') }}" rel="stylesheet"/>
+        <link href="{{ url_for('static',  filename='assets/css/argon-design-system.css') }}" rel="stylesheet"/>
+    {% endblock %}
+</head>
+
+<body class="index-page">
+
+<nav id="navbar-main"
+     class="navbar navbar-main navbar-expand-lg bg-white navbar-light position-sticky top-0 shadow py-2">
+    <div class="container">
+        <a class="navbar-brand mr-lg-5" href="auth.html">
+            <img src="{{ url_for('static',  filename='assets/img/logo.png') }}">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global"
+                aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="navbar_global">
+            <div class="navbar-collapse-header">
+                <div class="row">
+                    <div class="col-6 collapse-brand">
+                        <a href="/">
+                            <img src="{{ url_for('static',  filename='assets/img/logo.png') }}">
+                        </a>
+                    </div>
+                    <div class="col-6 collapse-close">
+                        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar_global"
+                                aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
+                            <span></span>
+                            <span></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">ჩვენ შესახებ</a>
+                </li>
+                {% if user == None %}
+                    <li class="nav-item {{  ' active' if request.endpoint == 'auth' else '' }}">
+                        <a href="{{ url_for('auth') }}" class="nav-link">აუტენტიფიკაცია</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbar-profile"
+                           role="button" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false">
+                            {{ user.phone }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbar-profile">
+                            {#<div class="dropdown-divider"></div>#}
+                            <a class="dropdown-item navbar-logout" href="{{ url_for('logout') }}">გასვლა</a>
+                        </div>
+                    </li>
+                {% endif %}
+            </ul>
+            <ul class="navbar-nav align-items-lg-center ml-lg-auto">
+                <li class="nav-item">
+                    <a class="nav-link nav-link-icon" href="https://github.com/ABGEO/nomrebi-web" target="_blank"
+                       data-toggle="tooltip" title="იხილეთ პროექტი GitHub-ზე">
+                        <i class="fa fa-github"></i>
+                        <span class="nav-link-inner--text d-lg-none">GitHub</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="wrapper">
+    {% block content %}{% endblock %}
+
+    <footer class="footer has-cards">
+        <div class="container">
+            <hr>
+            <div class="row align-items-center justify-content-md-between">
+                <div class="col-md-6">
+                    <div class="copyright">
+                        &copy;2021-{{ date.year }}, made with <i class="fa fa-heart"></i>
+                        By<a href="https://www.abgeo.dev/" target="_blank">ABGEO</a>.
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <ul class="nav nav-footer justify-content-end">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">ჩვენ შესახებ</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+
+{% block javascripts %}
+    <script src="{{ url_for('static',  filename='assets/js/core/jquery.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static',  filename='assets/js/core/popper.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static',  filename='assets/js/core/bootstrap.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static',  filename='assets/js/plugins/perfect-scrollbar.jquery.min.js') }}"></script>
+    <script src="{{ url_for('static',  filename='assets/js/plugins/bootstrap-switch.js') }}"></script>
+    <script src="{{ url_for('static',  filename='assets/js/plugins/nouislider.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static',  filename='assets/js/plugins/moment.min.js') }}"></script>
+    <script src="{{ url_for('static',  filename='assets/js/plugins/datetimepicker.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static',  filename='assets/js/plugins/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ url_for('static',  filename='assets/js/argon-design-system.min.js') }}" type="text/javascript"></script>
+{% endblock %}
+</body>
+
+</html>

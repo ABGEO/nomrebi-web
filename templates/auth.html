@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block title %}აუთენტიფიკაცია{% endblock %}
+
+{% block content %}
+    <section class="section section-shaped section-lg">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-5">
+                    <div class="card bg-secondary shadow border-0">
+                        <div class="card-body px-lg-5 py-lg-5">
+                            <div class="text-center text-muted mb-4">
+                                <small class="step-phone">
+                                    სერვისით სარგებლობისთვის აუცილებელია მოქმედი ტელეფონის ნომრის მითითება და
+                                    ვერიფიცირება
+                                </small>
+                                <small class="step-code" hidden>მიუთითეთ მიღებული SMS კოდი</small>
+                            </div>
+                            <form name="auth" role="form" action="{{ url_for('auth') }}" method="post">
+                                <div class="form-group mb-3">
+                                    <div class="input-group input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="ni ni-mobile-button"></i></span>
+                                        </div>
+                                        <input class="form-control" name="phone" placeholder="ტელეფონის ნომერი"
+                                               type="text" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group mb-3" hidden>
+                                    <div class="input-group input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                                        </div>
+                                        <input class="form-control" name="code" placeholder="SMS კოდი" type="text">
+                                    </div>
+                                </div>
+
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary my-4">აუთენტიფიკაცია</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ super() }}
+
+    <script src="{{ url_for('static',  filename='assets/js/auth.js') }}" type="text/javascript"></script>
+{% endblock %}
