@@ -10,7 +10,7 @@
 
     <meta property="og:title" content="{{ self.title() }} | ნომრები"/>
     <meta property="og:site_name" content="ნომრები"/>
-    <meta property="og:url"  content="{{ url_for(request.endpoint, _external=True) }}"/>
+    <meta property="og:url"  content="{{ url_for(request.endpoint if request.endpoint else 'main.index', _external=True) }}"/>
     <meta property="og:description" content="{{ self.description() }}"/>
     <meta property="og:type" content="website"/>
     <meta property="og:image" content="{{ url_for('static', _external=True, filename='assets/img/social_image.png') }}" />

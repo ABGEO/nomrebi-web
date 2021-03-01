@@ -25,6 +25,11 @@ def inject_global_variables():
     }
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('error/404.html'), 404
+
+
 app.register_blueprint(auth.bp)
 app.register_blueprint(main.bp)
 app.register_blueprint(pwa.bp)
