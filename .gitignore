@@ -14,5 +14,5 @@ dist/
 build/
 *.egg-info/
 
-static/node_modules
-static/package-lock.json
+app/static/node_modules
+app/static/package-lock.json
