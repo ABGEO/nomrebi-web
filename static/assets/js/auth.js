@@ -38,6 +38,8 @@ function sendSMS(resend = false) {
         },
         success: function (response) {
             if (response.authenticated) {
+                gtag('event', 'authentication')
+
                 window.location = response.destination
             } else if (response.time) {
                 $('small.step-phone').attr('hidden', true)

@@ -19,6 +19,8 @@ $('form[name="search"]').submit(function (e) {
             searching(false, form)
         }
     });
+
+    gtag('event', 'search_number')
 });
 
 /**
@@ -43,6 +45,8 @@ $('body').on('click', 'a.print-profile', function (e) {
         a.download = $('span.phone').text() + '.png'
         a.click()
     });
+
+    gtag('event', 'print_profile')
 });
 
 /**
