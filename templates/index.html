@@ -42,7 +42,7 @@
                                 <div class="row justify-content-center">
                                     <div class="col-lg-3 order-lg-2 profile-picture-wrapper">
                                         <div class="card-profile-image">
-                                            <img src="{{ url_for('static',  filename='assets/img/avatar.jpg') }}"
+                                            <img src="{{ url_for('static', filename='assets/img/avatar.jpg') }}"
                                                  class="rounded-circle profile-picture">
                                         </div>
                                     </div>
@@ -86,6 +86,6 @@
 {% block javascripts %}
     {{ super() }}
 
-    <script src="{{ url_for('static',  filename='assets/js/plugins/html2canvas.min.js') }}" type="text/javascript"></script>
-    <script src="{{ url_for('static',  filename='assets/js/search.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='assets/js/plugins/html2canvas.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='assets/js/search.js') }}" type="text/javascript"></script>
 {% endblock %}
