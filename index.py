@@ -8,6 +8,7 @@ from flask import (
     url_for,
     request,
     json,
+    send_from_directory,
 )
 
 import service.nomrebi_api as api
@@ -93,6 +94,18 @@ def logout():
 
     response = make_response(redirect(url_for('auth')))
     response.delete_cookie('user_data')
+    return response
+
+
+@app.route('/manifest.json')
+def manifest():
+    return send_from_directory('static', 'manifest.json')
+
+
+@app.route('/service-worker.js')
+def service_worker():
+    response = make_response(send_from_directory('static', 'assets/js/service-worker.js'))
+    response.headers['Cache-Control'] = 'no-cache'
     return response
 
 
