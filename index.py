@@ -45,6 +45,16 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/about', methods=['GET'])
+def about():
+    """
+    About page.
+    :return: The response.
+    """
+
+    return render_template('about.html')
+
+
 @app.route('/auth', methods=['GET', 'POST'])
 def auth():
     """

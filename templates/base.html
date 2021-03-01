@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ka">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='assets/img/favicon.png') }}">
+    <title>{% block title %}მთავარი{% endblock %} | ნომრები</title>
+    <meta name="description" content="{% block description %}იპოვეთ სასურველი ნომერი ერთ კლიკში{% endblock %}">
+
+    <meta property="og:title" content="{{ self.title() }} | ნომრები"/>
+    <meta property="og:site_name" content="ნომრები"/>
+    <meta property="og:url"  content="{{ url_for(request.endpoint, _external=True) }}"/>
+    <meta property="og:description" content="{{ self.description() }}"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="{{ url_for('static', _external=True, filename='assets/img/social_image.png') }}" />
+
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+
+    {% block stylesheets %}
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+        <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+        <link href="{{ url_for('static', filename='assets/css/nucleo-icons.css') }}" rel="stylesheet"/>
+        <link href="{{ url_for('static', filename='assets/css/nucleo-svg.css') }}" rel="stylesheet"/>
+        <link href="{{ url_for('static', filename='assets/css/font-awesome.css') }}" rel="stylesheet"/>
+        <link href="{{ url_for('static', filename='assets/css/nucleo-svg.css') }}" rel="stylesheet"/>
+        <link href="{{ url_for('static', filename='assets/css/argon-design-system.css') }}" rel="stylesheet"/>
+        <link href="{{ url_for('static', filename='assets/css/toastr.min.css') }}" rel="stylesheet"/>
+    {% endblock %}
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CZZGZGG5R8"></script>
+    <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-CZZGZGG5R8');
+    </script>
+</head>
+
+<body class="index-page">
+
+{% block body %}{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ url_for('static', filename='assets/js/core/jquery.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='assets/js/core/popper.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='assets/js/core/bootstrap.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='assets/js/plugins/perfect-scrollbar.jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/plugins/bootstrap-switch.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/plugins/nouislider.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='assets/js/plugins/moment.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/plugins/datetimepicker.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='assets/js/plugins/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/plugins/toastr.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/toastr-settings.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='assets/js/argon-design-system.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='assets/js/app.js') }}" type="text/javascript"></script>
+{% endblock %}
+</body>
+
+</html>
