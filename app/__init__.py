@@ -29,9 +29,9 @@ def page_not_found(e):
 
 
 from app.views import (
-    auth, main, pwa
+    auth, main, static
 )
 
 app.register_blueprint(auth.bp)
 app.register_blueprint(main.bp)
-app.register_blueprint(pwa.bp)
+app.register_blueprint(static.bp)
