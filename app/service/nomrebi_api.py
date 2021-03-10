@@ -1,7 +1,9 @@
 import json
 import requests
 
-API_BASE_URL = 'https://nomrebi-api.herokuapp.com/api'
+from app import app
+
+API_BASE_URL = app.config['API_BASE_URL']
 
 
 def authenticate(phone_number, resend=False):

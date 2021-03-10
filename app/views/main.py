@@ -23,7 +23,7 @@ def index():
 
         return json.jsonify(response), code
 
-    return render_template('index.html')
+    return render_template('main/index.html.jinja2')
 
 
 @bp.route('/about', methods=['GET'])
@@ -33,4 +33,4 @@ def about():
     :return: The response.
     """
 
-    return render_template('about.html')
+    return render_template('main/about.html.jinja2')

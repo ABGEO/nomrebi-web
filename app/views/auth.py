@@ -44,7 +44,7 @@ def index():
                 url_for('main.index')
             )
 
-    return render_template('auth.html')
+    return render_template('auth/index.html.jinja2')
 
 
 @bp.route('/logout', methods=['GET'])
