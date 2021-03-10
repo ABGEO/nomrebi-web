@@ -11,10 +11,10 @@ $('form[name="search"]').submit(function (e) {
         type: "POST",
         url: form.attr('action'),
         data: form.serializeArray(),
-        success: function (response, code) {
+        success: function (response, textStatus, xhr) {
             searching(false, form)
 
-            if (code === 200) {
+            if (xhr.status === 200) {
                 displayProfile(response)
             } else {
                 toastr.info('სამწუხაროდ ინფორმაცია ამ ნომრის მფლობელის შესახებ ვერ მოიძებნა.')
