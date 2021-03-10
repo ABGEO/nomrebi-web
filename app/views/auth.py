@@ -5,7 +5,6 @@ from flask import (
 )
 
 import app.service.nomrebi_api as api
-from app.service.auth_helper import get_auth_data
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -17,7 +16,7 @@ def index():
     :return: The response.
     """
 
-    if get_auth_data() is not None:
+    if request.cookies.get('access_token') is not None:
         return redirect(url_for('main.index'))
 
     if request.method == 'POST':
@@ -26,7 +25,6 @@ def index():
             if authenticate['authenticated']:
                 # If user is already authenticated on the API.
                 return __make_auth_response(
-                    request.form['phone'],
                     authenticate['data'],
                     url_for('main.index')
                 )
@@ -42,7 +40,6 @@ def index():
                 return json.jsonify({'error': authenticate['error']}), 400
 
             return __make_auth_response(
-                request.form['phone'],
                 authenticate['data'],
                 url_for('main.index')
             )
@@ -58,15 +55,14 @@ def logout():
     """
 
     response = make_response(redirect(url_for('auth.index')))
-    response.delete_cookie('user_data')
+    response.delete_cookie('access_token')
     return response
 
 
-def __make_auth_response(phone, auth_data, destination=None):
+def __make_auth_response(access_token, destination=None):
     """
     Create an authentication response and set cookies.
-    :param phone: User's phone number.
-    :param auth_data: The authentication credentials, such as User's phone, ID and the access token.
+    :param access_token: Access token with expiration date.
     :param destination: The redirect destination.
     :return: An authentication response.
     """
@@ -75,13 +71,7 @@ def __make_auth_response(phone, auth_data, destination=None):
         'authenticated': True,
         'destination': destination,
     }))
-    user_data = {
-        'phone': phone,
-        'id': auth_data['id'],
-        'token': auth_data['tk'],
-    }
 
-    response.set_cookie('user_data', json.dumps(user_data),
-                        expires=datetime.datetime.now() + datetime.timedelta(days=14))
+    response.set_cookie('access_token', access_token['token'], expires=access_token['expires'])
 
     return response

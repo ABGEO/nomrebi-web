@@ -28,14 +28,21 @@ def authenticate_with_sms_code(phone_number, code):
     return json.loads(response.content)
 
 
-def get_number_info(phone_number, auth):
+def get_number_info(phone_number, access_token):
     """
     Get the information about given number.
     :param phone_number: Get information for.
-    :param auth: The authentication credentials, such as User's phone, ID and the access token.
+    :param access_token: Access Token.
     :return: The API response or an empty object.
     """
 
     response = requests.get(f'{API_BASE_URL}/number-info/{phone_number}',
-                            params={'u_phone': auth['phone'], 'u_id': auth['id'], 'u_token': auth['token']})
-    return json.loads(response.content) if response.status_code == 200 else {}
+                            headers={'Authorization': f'Bearer {access_token}'})
+
+    result = {}
+    try:
+        result = json.loads(response.content)
+    except:
+        pass
+
+    return result, response.status_code

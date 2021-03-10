@@ -32,21 +32,13 @@
                     <li class="nav-item{{  ' active' if request.endpoint == 'main.about' else '' }}">
                         <a href="{{ url_for('main.about') }}" class="nav-link">ჩვენ შესახებ</a>
                     </li>
-                    {% if user == None %}
-                        <li class="nav-item{{  ' active' if request.endpoint == 'auth.index' else '' }}">
-                            <a href="{{ url_for('auth.index') }}" class="nav-link">აუტენტიფიკაცია</a>
+                    {% if is_authenticated %}
+                        <li class="nav-item">
+                            <a href="{{ url_for('auth.logout') }}" class="nav-link text-danger">გასვლა</a>
                         </li>
                     {% else %}
-                        <li class="nav-item dropdown active">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbar-profile"
-                               role="button" data-toggle="dropdown" aria-haspopup="true"
-                               aria-expanded="false">
-                                {{ user.phone }}
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbar-profile">
-                                {#<div class="dropdown-divider"></div>#}
-                                <a class="dropdown-item navbar-logout" href="{{ url_for('auth.logout') }}">გასვლა</a>
-                            </div>
+                        <li class="nav-item{{  ' active' if request.endpoint == 'auth.index' else '' }}">
+                            <a href="{{ url_for('auth.index') }}" class="nav-link">აუტენტიფიკაცია</a>
                         </li>
                     {% endif %}
                 </ul>

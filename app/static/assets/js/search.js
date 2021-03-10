@@ -11,9 +11,22 @@ $('form[name="search"]').submit(function (e) {
         type: "POST",
         url: form.attr('action'),
         data: form.serializeArray(),
-        success: function (response) {
+        success: function (response, code) {
             searching(false, form)
-            displayProfile(response)
+
+            if (code === 200) {
+                displayProfile(response)
+            } else {
+                toastr.info('სამწუხაროდ ინფორმაცია ამ ნომრის მფლობელის შესახებ ვერ მოიძებნა.')
+            }
+        },
+        statusCode: {
+            401: function () {
+                window.location = '/auth/logout'
+            },
+            403: function () {
+                window.location = '/auth/logout'
+            }
         },
         error: function (response) {
             searching(false, form)
@@ -74,11 +87,6 @@ function searching(status, form) {
  */
 function displayProfile(values) {
     const data = values.data
-    if ( $.isEmptyObject(data)) {
-        toastr.info('სამწუხაროდ ინფორმაცია ამ ნომრის მფლობელის შესახებ ვერ მოიძებნა.')
-        return
-    }
-
     const card = $('div.card-profile')
     const additionalNamesWrapper = card.find('div.additional-names-wrapper')
     card.attr('hidden', false)

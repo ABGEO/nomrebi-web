@@ -1,13 +1,12 @@
 import datetime
 
 from flask import (
-    Flask, render_template,
+    Flask, render_template, request,
 )
 
 from app.views import (
     auth, main, pwa
 )
-from app.service.auth_helper import get_auth_data
 
 app = Flask(__name__)
 
@@ -20,7 +19,7 @@ def inject_global_variables():
     """
 
     return {
-        'user': get_auth_data(),
+        'is_authenticated': request.cookies.get('access_token') is not None,
         'date': datetime.datetime.now()
     }
 

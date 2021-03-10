@@ -3,7 +3,6 @@ from flask import (
 )
 
 import app.service.nomrebi_api as api
-from app.service.auth_helper import get_auth_data
 
 bp = Blueprint('main', __name__)
 
@@ -15,12 +14,14 @@ def index():
     :return: The response.
     """
 
-    auth_data = get_auth_data()
-    if auth_data is None:
+    access_token = request.cookies.get('access_token')
+    if access_token is None:
         return redirect(url_for('auth.index'))
 
     if request.method == 'POST':
-        return json.jsonify(api.get_number_info(request.form['phone'], auth_data))
+        response, code = api.get_number_info(request.form['phone'], access_token)
+
+        return json.jsonify(response), code
 
     return render_template('index.html')
 
