@@ -3,7 +3,7 @@ from flask import (
 )
 
 
-bp = Blueprint('pwa', __name__)
+bp = Blueprint('static', __name__)
 
 
 @bp.route('/manifest.json')
@@ -16,3 +16,13 @@ def service_worker():
     response = make_response(send_from_directory('static', 'assets/js/service-worker.js'))
     response.headers['Cache-Control'] = 'no-cache'
     return response
+
+
+@bp.route('/robots.txt')
+def robots_txt():
+    return send_from_directory('static', 'robots.txt')
+
+
+@bp.route('/sitemap.xml')
+def sitemap():
+    return send_from_directory('static', 'sitemap.xml')
